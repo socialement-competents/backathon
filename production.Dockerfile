@@ -1,10 +1,7 @@
 FROM keymetrics/pm2:8-alpine
-
-RUN npm install pm2 -g
-
-COPY . /var/www/
-
 WORKDIR /var/www
+
+COPY . .
 
 ENV KEYMETRICS_PUBLIC=m1cgmqibbhlibom
 ENV KEYMETRICS_SECRET=yl5lvcryikz8p9h
