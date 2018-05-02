@@ -1,11 +1,8 @@
-FROM keymetrics/pm2:latest-alpine
+FROM keymetrics/pm2:8-alpine
 
 RUN npm install pm2 -g
 
-COPY package.json /var/www/
-COPY process.yml /var/www/
-COPY node_modules /var/www/node_modules
-COPY build /var/www/build
+COPY . /var/www/
 
 WORKDIR /var/www
 
