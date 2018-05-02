@@ -1,6 +1,6 @@
 version: '2'
 services:
-  app:
+  integrationtests:
     build:
       context: .
       dockerfile: integration-tests.Dockerfile
