@@ -20,6 +20,13 @@ services:
     networks:
       - all
 
+  front:
+    image: socialementcompetents/hackafront
+    ports:
+      - 8080:80
+    networks:
+      - all
+
   mongo:
     image: mongo
     ports:
