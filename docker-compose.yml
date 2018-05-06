@@ -14,6 +14,9 @@ services:
     depends_on: 
       - mongo
       - mailcatcher
+    volumes:
+      - .:/tmp/app/
+      - /tmp/app/node_modules
     networks:
       - all
 
