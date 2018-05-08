@@ -25,7 +25,8 @@ const UserSchema = new Schema(
       required: [true, "can't be blank"]
     },
     hash: String,
-    salt: String
+    salt: String,
+    isValidated: Boolean,
   },
   { timestamps: true }
 )
@@ -92,6 +93,7 @@ export interface IUser extends Document {
   salt: string
   token?: SignOptions
   fullname?: string
+  isValidated: boolean
   toProfileJSONFor: (user: IUser) => IUser
   toAuthJSON: () => IUser
   generateJWT: () => SignOptions

@@ -1,5 +1,5 @@
 import { User } from '../../models/User'
-// import { Backhaton } from '../../index'
+import { server } from '../../server'
 
 export function getAll(limit: number) {
   return User.find()
@@ -33,9 +33,9 @@ export async function create(
   }
   try {
     const saved = await user.save()
-    // Backhaton.transporter.sendMail(mailOptions, (err) => {
-    //   console.log(err)
-    // })
+    server.transporter.sendMail(mailOptions, (err) => {
+      console.log(err)
+    })
     return saved
   } catch (e) {
     return e

@@ -117,6 +117,6 @@ export class Server {
   }
 }
 
-const app = new Server().app
+export const server = new Server()
 
-export default app
+export default server.app
