@@ -17,13 +17,11 @@ import { graphqlSchema } from './graphql'
 
 export class Server {
   public app: express.Application
-  public io: io.Server
+  private io: io.Server
   private server: http.Server
-  private transporter: Transporter
+  public transporter: Transporter
   private isProduction: boolean = process.env.NODE_ENV === 'production'
-  private secret: string = this.isProduction
-    ? process.env.SESSION_SECRET
-    : 'tennisify'
+  private secret: string = process.env.SESSION_SECRET
   private emailHost: string = process.env.EMAIL_HOST
   private emailPort: string = process.env.EMAIL_PORT
   private userMail = process.env.USER_MAILER
@@ -88,13 +86,12 @@ export class Server {
   }
 
   private initTransporter() {
-    const auth =
-      process.env.NODE_ENV === 'production'
-        ? {
-            user: this.userMail,
-            pass: this.passwordMail
-          }
-        : undefined
+    const auth = this.isProduction
+      ? {
+          user: this.userMail,
+          pass: this.passwordMail
+        }
+      : undefined
 
     this.transporter = createTransport({
       host: this.emailHost,
@@ -108,7 +105,6 @@ export class Server {
   public static bootstrap(): Server {
     const app = new Server()
     app.io.on('connect', (socket: io.Socket) => {
-      app.io.emit('any', 'Slt grigny le s')
       console.log(socket.id, socket.handshake.query)
       socket.on('disconnect', () => {
         console.log('Client disconnected')

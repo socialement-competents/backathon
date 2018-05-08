@@ -7,7 +7,7 @@ function getTokenFromHeader(req: Request) {
   const auth =
     req.headers.authorization &&
     (req.headers.authorization as string).split(' ')
-  if ((auth && auth[0] === 'Token') || auth[0] === 'Bearer') {
+  if (auth && (auth[0] === 'Token' || auth[0] === 'Bearer')) {
     return auth[1]
   }
 

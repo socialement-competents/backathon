@@ -9,7 +9,7 @@ import {
   GraphQLInt
 } from 'graphql'
 
-import { User, IUser } from '../models/User'
+import { getAll, getById, create } from './controllers/user.ctrl'
 
 export const userType = new GraphQLObjectType({
   name: 'User',
@@ -43,10 +43,7 @@ const query = {
         type: GraphQLInt
       }
     },
-    resolve: (root, { limit }) =>
-      User.find()
-        .limit(limit)
-        .exec()
+    resolve: (root, { limit }) => getAll(limit)
   },
   userById: {
     type: userType,
@@ -56,7 +53,7 @@ const query = {
         type: GraphQLString
       }
     },
-    resolve: (root, { id }) => User.findById(id).exec()
+    resolve: (root, { id }) => getById(id)
   }
 }
 
@@ -77,14 +74,8 @@ const mutation = {
         type: new GraphQLNonNull(GraphQLString)
       }
     },
-    resolve: (obj, { email, password, firstname, lastname }) => {
-      const user = new User()
-      user.email = email
-      user.firstname = firstname
-      user.lastname = lastname
-      user.setPassword(password)
-      return user.save()
-    }
+    resolve: (obj, { email, password, firstname, lastname }) =>
+      create(email, password, firstname, lastname)
   }
 }
 
