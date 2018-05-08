@@ -4,6 +4,7 @@ import * as session from 'express-session'
 import * as graphqlHTTP from 'express-graphql'
 import { urlencoded, json } from 'body-parser'
 import { connect, createConnection } from 'mongoose'
+import { createTransport, Transporter } from 'nodemailer'
 import { config } from 'dotenv'
 import * as cors from 'cors'
 import * as logger from 'morgan'
@@ -18,16 +19,22 @@ export class Server {
   public app: express.Application
   public io: io.Server
   private server: http.Server
+  private transporter: Transporter
   private isProduction: boolean = process.env.NODE_ENV === 'production'
   private secret: string = this.isProduction
     ? process.env.SESSION_SECRET
     : 'tennisify'
+  private emailHost: string = process.env.EMAIL_HOST
+  private emailPort: string = process.env.EMAIL_PORT
+  private userMail = process.env.USER_MAILER
+  private passwordMail = process.env.USER_PASSWORD_MAILER
 
   constructor() {
     this.app = express()
     this.config()
     this.createServer()
     this.initSockets()
+    this.initTransporter()
     this.routes()
   }
 
@@ -55,7 +62,7 @@ export class Server {
   }
 
   private routes() {
-    this.app.use(new MainRouter(this.io).router)
+    this.app.use(new MainRouter(this.io, this.transporter).router)
 
     this.app.use(
       '/graphql',
@@ -78,6 +85,24 @@ export class Server {
 
   private initSockets() {
     this.io = io(this.server)
+  }
+
+  private initTransporter() {
+    const auth =
+      process.env.NODE_ENV === 'production'
+        ? {
+            user: this.userMail,
+            pass: this.passwordMail
+          }
+        : undefined
+
+    this.transporter = createTransport({
+      host: this.emailHost,
+      port: parseInt(this.emailPort),
+      secure: false,
+      ignoreTLS: true,
+      auth
+    })
   }
 
   public static bootstrap(): Server {
