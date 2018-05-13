@@ -24,8 +24,8 @@ export class Server {
   private secret: string = process.env.SESSION_SECRET
   private emailHost: string = process.env.EMAIL_HOST
   private emailPort: string = process.env.EMAIL_PORT
-  private userMail:string = process.env.USER_MAILER
-  private passwordMail:string = process.env.USER_PASSWORD_MAILER
+  private userMail: string = process.env.USER_MAILER
+  private passwordMail: string = process.env.USER_PASSWORD_MAILER
 
   constructor() {
     this.app = express()
