@@ -19,7 +19,6 @@ passport.use(
             message: 'email or password is invalid'
           })
         }
-
         return done(undefined, user)
       } catch (e) {
         done(e)

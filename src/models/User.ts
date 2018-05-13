@@ -82,6 +82,38 @@ UserSchema.methods = {
       lastname: this.lastname,
       fullname: this.fullname
     }
+<<<<<<< HEAD
+=======
+
+    return this.save()
+  },
+
+  unfavorite (id: Schema.Types.ObjectId) {
+    this.favorites.remove(id)
+    return this.save()
+  },
+
+  isFavorite (id: Schema.Types.ObjectId) {
+    return this.favorites.some((favoriteId: Schema.Types.ObjectId) =>
+    favoriteId.toString() === id.toString())
+  },
+
+  follow (id: Schema.Types.ObjectId) {
+    if (this.following.indexOf(id) === -1) {
+      this.following.push(id)
+    }
+    return this.save()
+  },
+
+  unfollow (id: Schema.Types.ObjectId) {
+    this.following.remove(id)
+    return this.save()
+  },
+
+  isFollowing (id: Schema.Types.ObjectId) {
+    return this.following.some((followId: Schema.Types.ObjectId) =>
+    followId.toString() === id.toString())
+>>>>>>> dev
   }
 }
 
