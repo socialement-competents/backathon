@@ -91,12 +91,12 @@ export interface IUser extends Document {
   email: string
   hash: string
   salt: string
-  token?: SignOptions
+  token?: string
   fullname?: string
   isValidated: boolean
   toProfileJSONFor: (user: IUser) => IUser
   toAuthJSON: () => IUser
-  generateJWT: () => SignOptions
+  generateJWT: () => string
   setPassword: (password: string) => void
   validPassword: (password: string) => boolean
 }
