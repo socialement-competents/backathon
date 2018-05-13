@@ -1,5 +1,4 @@
 import { getTokenFromHeader } from '../../routes/auth'
-import { request } from 'http';
 
 describe('Auth', () => {
   it('parses token from requests', () => {
