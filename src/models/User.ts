@@ -1,7 +1,7 @@
 import { Document, model, Model, Schema } from 'mongoose'
 import * as uniqueValidator from 'mongoose-unique-validator'
 import { pbkdf2Sync, randomBytes } from 'crypto'
-import { sign, SignOptions } from 'jsonwebtoken'
+import { sign } from 'jsonwebtoken'
 
 const secret = process.env.SESSION_SECRET
 
