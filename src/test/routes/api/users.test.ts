@@ -6,17 +6,18 @@ describe('Users routes', () => {
     const result = await request(app)
       .post('/api/users')
       .send({
-        firstname: 'Rafael',
-        lastname: 'Nadal',
+        firstname: 'rafael',
+        lastname: 'nadal',
         email: `intg-test-${new Date().getTime()}@tennisi.fy`,
         password: 'ok'
       })
       .set('content-type', 'application/json')
 
-    const { firstname, email, token } = result.body
+    const { firstname, lastname, email, token } = result.body
 
     expect(result.status).toBe(200)
     expect(firstname).toBe('rafael')
+    expect(lastname).toBe('nadal')
     expect(email).toContain('@tennisi.fy')
     expect(token).toBeTruthy()
   })
@@ -42,11 +43,11 @@ describe('Users routes', () => {
       .set('Content-Type', 'application/json')
       .send({
         firstname: 'roger',
-        image: 'players/federer.png'
+        lastname: 'federer'
       })
 
-      expect(putResult.status).toBe(200)
-      expect(putResult.body.lastname).toBe('nadal')
-      expect(putResult.body.image).toBe('players/federer.png')
+    expect(putResult.status).toBe(200)
+    expect(putResult.body.lastname).toBe('federer')
+    expect(putResult.body.firstname).toBe('roger')
   })
 })
